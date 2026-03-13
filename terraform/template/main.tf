@@ -1,25 +1,42 @@
-resource "proxmox_lxc" "container" {
+resource "proxmox_virtual_environment_container" "container" {
+  node_name = "pve"
+unprivileged  = true
+  initialization {
+    hostname = var.container_name
 
-  hostname = var.container_name
-  target_node = "pve"
+    ip_config {
+      ipv4 {
+        address = "dhcp"
+      }
+    }
 
-  cores  = var.cpu
-  memory = var.memory
-
-  ostemplate = "local:vztmpl/ubuntu-22.04-standard_22.04-1_amd64.tar.zst"
-
-  password = "changeme"
-
-  rootfs {
-    storage = "local-lvm"
-    size    = "8G"
+    user_account {
+      password = "newpass"
+    }
   }
 
-  network {
-    name   = "eth0"
-    bridge = "vmbr0"
-    ip     = "dhcp"
+  cpu {
+    cores = var.cpu
   }
 
-  start = true
+  memory {
+    dedicated = var.memory
+  }
+
+  operating_system {
+    template_file_id = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
+    type             = "ubuntu"
+  }
+
+  disk {
+    datastore_id = "local-lvm"
+    size         = 8
+  }
+
+  network_interface {
+   name   = "eth0"
+   bridge = "vmbr0"
+  }
+
+  started = true
 }

@@ -1,5 +1,5 @@
 # Use Go official image
-FROM golang:1.22-alpine
+FROM golang:1.25-alpine
 
 # Install necessary tools
 RUN apk add --no-cache bash git curl
