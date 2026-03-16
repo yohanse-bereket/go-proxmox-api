@@ -10,7 +10,7 @@ services:
     ports:
       - "5431:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data_proxmox:/var/lib/postgresql/data
 
   api:
     build: .
@@ -26,4 +26,4 @@ services:
       - ./terraform:/terraform
 
 volumes:
-  db_data:
+  db_data_proxmox:
