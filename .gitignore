@@ -63,3 +63,5 @@ config.local.yaml
 ./small_things.txt
 
 *.tfvars
+
+workspace/

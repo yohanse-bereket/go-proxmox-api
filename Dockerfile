@@ -2,7 +2,14 @@
 FROM golang:1.25-alpine
 
 # Install necessary tools
-RUN apk add --no-cache bash git curl
+RUN apk add --no-cache bash git curl unzip
+
+# Install Terraform
+ENV TERRAFORM_VERSION=1.14.7
+RUN curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip \
+    && unzip terraform.zip \
+    && mv terraform /usr/local/bin/ \
+    && rm terraform.zip
 
 # Set working directory
 WORKDIR /app
