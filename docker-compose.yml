@@ -20,7 +20,7 @@ services:
     env_file:
       - .env
     ports:
-      - "8081:8080"
+      - "${APP_PORT}:8080"
     volumes:
       - ./workspace:/workspace
       - ./terraform:/terraform
