@@ -3,14 +3,14 @@ version: "3.9"
 services:
 
   db:
-    image: postgres:15
+    image: postgres:16-alpine
     container_name: proxmox-db
     env_file:
       - .env
-    ports:
-      - "5431:5432"
     volumes:
-      - db_data_proxmox:/var/lib/postgresql/data
+      - db_data_proxmox:/var/lib/postgresql
+    restart: unless-stopped
+
 
   api:
     build: .
