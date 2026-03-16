@@ -10,7 +10,6 @@ func TerraformInit(dir string, uuid string) error {
 	cmd := exec.Command(
 		"terraform",
 		"init",
-		"-backend-config=key=containers/"+uuid+".tfstate",
 	)
 
 	cmd.Dir = dir

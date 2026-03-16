@@ -17,9 +17,3 @@ type Container struct {
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
-
-type CreateContainerRequest struct {
-	Name   string `json:"name"`
-	CPU    int    `json:"cpu"`
-	Memory int    `json:"memory"`
-}

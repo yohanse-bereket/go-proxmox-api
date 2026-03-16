@@ -18,9 +18,15 @@ const (
 	workspace   = "/workspace/containers"
 )
 
+type CreateContainerRequest struct {
+	Name   string `json:"name"`
+	CPU    int    `json:"cpu"`
+	Memory int    `json:"memory"`
+}
+
 func CreateContainer(c *gin.Context) {
 
-	var req models.CreateContainerRequest
+	var req CreateContainerRequest
 
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -39,11 +45,25 @@ func CreateContainer(c *gin.Context) {
 		return
 	}
 
+	pmAPIURL := os.Getenv("PM_API_URL")
+	pmUser := os.Getenv("PM_USER")
+	pmPassword := os.Getenv("PM_PASSWORD")
+
 	tfvars := fmt.Sprintf(`
 container_name="%s"
 cpu=%d
 memory=%d
-`, req.Name, req.CPU, req.Memory)
+pm_api_url="%s"
+pm_user="%s"
+pm_password="%s"
+`,
+		req.Name,
+		req.CPU,
+		req.Memory,
+		pmAPIURL,
+		pmUser,
+		pmPassword,
+	)
 
 	os.WriteFile(workDir+"/terraform.tfvars", []byte(tfvars), 0644)
 
