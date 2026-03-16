@@ -61,3 +61,5 @@ config.local.yaml
 /data/
 
 ./small_things.txt
+
+*.tfvars
